@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>AI Subak Game</title>
+    <meta
+      name="description"
+      content="과일을 떨어뜨려 합치고 코인을 모아 흔들기 스킬을 쓰는 세로형 수박게임 웹 이식판"
+    />
+  </head>
+  <body>
+    <div id="app">
+      <main class="shell">
+        <section class="game-frame" aria-label="AI Subak Game">
+          <canvas id="game" width="540" height="960"></canvas>
+
+          <div id="titleScreen" class="title-screen">
+            <img class="title-image" src="/assets/ui/title.png" alt="AI Subak Game" />
+            <button id="startButton" class="start-button" type="button">Start</button>
+            <p class="title-best" id="titleBest">Best: 0</p>
+          </div>
+
+          <div id="gameUi" class="game-ui" hidden>
+            <div class="hud hud-top">
+              <div class="score-line">
+                <span id="score">Score: 0</span>
+                <span id="best">Best: 0</span>
+              </div>
+            </div>
+            <div class="next-panel">
+              <span>NEXT</span>
+              <img id="nextFruit" alt="" />
+            </div>
+            <div id="countdown" class="countdown" hidden>
+              <div class="ring"><span id="countdownText">5</span></div>
+            </div>
+            <div class="top-actions">
+              <button id="optionButton" type="button">Option</button>
+              <button id="shopButton" type="button">Shop</button>
+            </div>
+            <div class="skill-area">
+              <button id="shakeButton" type="button">
+                <span id="shakes" class="shake-count">count : 1</span>
+                <span class="shake-label">Shake</span>
+              </button>
+            </div>
+          </div>
+
+          <div id="message" class="message" hidden></div>
+          <div id="gameOver" class="overlay" hidden>
+            <div class="dialog">
+              <h1>Game Over</h1>
+              <p id="finalScore">Score: 0</p>
+              <button id="playAgainButton" type="button">Play Again</button>
+              <button id="goTitleButton" type="button">Title</button>
+            </div>
+          </div>
+          <div id="shop" class="overlay" hidden>
+            <div class="dialog">
+              <h1>Shake Shop</h1>
+              <p id="coins">coin : 0</p>
+              <p>20 coins</p>
+              <button id="buyShakeButton" type="button">Buy Shake</button>
+              <button id="closeShopButton" type="button">Close</button>
+            </div>
+          </div>
+          <div id="option" class="overlay" hidden>
+            <div class="dialog">
+              <h1>Option</h1>
+              <label class="volume-control">
+                <span>Volume</span>
+                <input id="volumeSlider" type="range" min="0" max="1" step="0.01" value="1" />
+              </label>
+              <button id="optionNewGameButton" type="button">New Game</button>
+              <button id="optionTitleButton" type="button">Main</button>
+              <button id="closeOptionButton" type="button">Close</button>
+            </div>
+          </div>
+        </section>
+
+        <aside class="instructions" aria-label="조작법">
+          <h2>AI Subak Game</h2>
+          <table>
+            <tbody>
+              <tr>
+                <th>Move</th>
+                <td>마우스 또는 손가락으로 위쪽 과일 위치 조절</td>
+              </tr>
+              <tr>
+                <th>Drop</th>
+                <td>게임판을 탭하거나 클릭</td>
+              </tr>
+              <tr>
+                <th>Shake</th>
+                <td>코인으로 구매한 흔들기 사용</td>
+              </tr>
+            </tbody>
+          </table>
+        </aside>
+      </main>
+      <script type="module" src="/src/main.ts"></script>
+    </div>
+  </body>
+</html>
