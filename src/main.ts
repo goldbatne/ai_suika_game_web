@@ -263,7 +263,7 @@ function mergeFruit(a: FruitBody, b: FruitBody) {
     const worldY = TOP_Y - spawn.y / UNIT;
     const next = createFruit(level + 1, worldX, worldY, false);
     next.popStart = performance.now();
-    Body.applyForce(next, next.position, { x: 0, y: -0.0067 });
+    Body.applyForce(next, next.position, { x: 0, y: -0.02 });
     addScore(10 * (level + 1));
   } else {
     addScore(100);

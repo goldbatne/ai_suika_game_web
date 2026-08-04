@@ -4,3 +4,5 @@ dist/
 vite.log
 vite.err.log
 npm-debug.log*
+site-build.tar.gz
+.sites-package-stage/

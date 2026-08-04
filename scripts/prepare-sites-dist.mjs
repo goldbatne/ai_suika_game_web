@@ -1,6 +1,10 @@
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
+
+const indexHtml = await readFile("dist/index.html", "utf8");
 
 const workerSource = `
+const INDEX_HTML = ${JSON.stringify(indexHtml)};
+
 const MIME_TYPES = {
   ".html": "text/html; charset=utf-8",
   ".js": "text/javascript; charset=utf-8",
@@ -21,7 +25,7 @@ function contentType(pathname) {
 async function fetchAsset(env, request, pathname) {
   const assetUrl = new URL(request.url);
   assetUrl.pathname = pathname;
-  return env.ASSETS.fetch(new Request(assetUrl, request));
+  return env.ASSETS.fetch(new Request(assetUrl.toString(), request));
 }
 
 export default {
@@ -34,8 +38,19 @@ export default {
     }
 
     let response = await fetchAsset(env, request, pathname);
+    if (response.status === 404 && pathname === "/index.html") {
+      return new Response(INDEX_HTML, {
+        headers: { "content-type": "text/html; charset=utf-8" },
+      });
+    }
+
     if (response.status === 404 && !pathname.includes(".")) {
       response = await fetchAsset(env, request, "/index.html");
+      if (response.status === 404) {
+        return new Response(INDEX_HTML, {
+          headers: { "content-type": "text/html; charset=utf-8" },
+        });
+      }
     }
 
     if (!response.headers.get("content-type")) {
