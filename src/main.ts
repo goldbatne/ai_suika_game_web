@@ -237,6 +237,13 @@ function playSound(audio: HTMLAudioElement) {
   void audio.play().catch(() => undefined);
 }
 
+function stopAllAudio() {
+  for (const audio of Object.values(sounds)) {
+    audio.pause();
+    audio.currentTime = 0;
+  }
+}
+
 function mergeFruit(a: FruitBody, b: FruitBody) {
   if (a.merging || b.merging || a.fruitLevel == null || b.fruitLevel == null) return;
   if (!a.dropped || !b.dropped || a.fruitLevel !== b.fruitLevel) return;
@@ -444,6 +451,7 @@ function restart() {
 }
 
 function goTitle() {
+  stopAllAudio();
   scene = "title";
   gameOver = false;
   ready = false;
