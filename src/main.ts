@@ -42,7 +42,8 @@ const DEAD_ZONE_Y = 2.5;
 const SPAWN_Y = 3.12;
 const DROP_X_LIMIT = 1.85;
 const START_RANGE = 4;
-const FRUIT_VISUAL_DIAMETER_RATIO = 0.82;
+const FRUIT_SIZE_MULTIPLIER = 1.22;
+const FRUIT_VISUAL_DIAMETER_RATIO = 0.88;
 
 const FRUIT_MATTER = {
   friction: 0.2,
@@ -123,6 +124,10 @@ function randomStartIndex() {
   return Math.floor(Math.random() * START_RANGE);
 }
 
+function fruitScale(fruit: { scale: number }) {
+  return fruit.scale * FRUIT_SIZE_MULTIPLIER;
+}
+
 function loadImages() {
   for (const fruit of fruits) {
     const image = new Image();
@@ -183,7 +188,8 @@ function addWall(x: number, y: number, width: number, height: number, label: str
 function createFruit(index: number, xWorld = 0, yWorld = SPAWN_Y, isCurrent = false): FruitBody {
   const fruit = fruits[index];
   const pos = worldToScreen(xWorld, yWorld);
-  const radius = fruit.scale * UNIT;
+  const scale = fruitScale(fruit);
+  const radius = scale * UNIT;
   const body = Bodies.circle(pos.x, pos.y, radius, {
     ...FRUIT_MATTER,
     label: fruit.name,
@@ -191,7 +197,7 @@ function createFruit(index: number, xWorld = 0, yWorld = SPAWN_Y, isCurrent = fa
 
   body.fruitLevel = fruit.level;
   body.fruitName = fruit.name;
-  body.radiusWorld = fruit.scale;
+  body.radiusWorld = scale;
   body.dropped = !isCurrent;
   body.current = isCurrent;
   Body.setMass(body, fruit.mass);
@@ -330,7 +336,7 @@ function useShake() {
   }
   shakeCount -= 1;
   updateHud();
-  startShake(0.5, 50);
+  startShake(0.55, 90);
 
   for (const body of Composite.allBodies(engine.world) as FruitBody[]) {
     if (body.isStatic || body.fruitLevel == null) continue;
@@ -340,12 +346,12 @@ function useShake() {
     const toCenterX = clamp(-worldX, -1, 1);
     const randomX = Math.random() * 0.5 - 0.25;
     const dir = normalize(toCenterX + randomX, -1);
-    const forceScale = 0.0012 * body.mass;
+    const forceScale = 0.0024 * body.mass;
     Body.applyForce(body, body.position, {
       x: dir.x * 30 * forceScale,
       y: -dir.y * 30 * forceScale,
     });
-    Body.setAngularVelocity(body, body.angularVelocity + (Math.random() * 2 - 1) * 0.25);
+    Body.setAngularVelocity(body, body.angularVelocity + (Math.random() * 2 - 1) * 0.5);
     Sleeping.set(body, false);
   }
 }
@@ -556,7 +562,8 @@ function drawBodies() {
     if (body.fruitLevel == null) continue;
     const fruit = fruits[body.fruitLevel];
     const image = images.get(fruit.src);
-    const radius = fruit.scale * UNIT;
+    const scale = fruitScale(fruit);
+    const radius = scale * UNIT;
 
     ctx.save();
     ctx.translate(body.position.x, body.position.y);
@@ -583,7 +590,7 @@ function drawBodies() {
 function drawUnitySprite(image: HTMLImageElement, fruit: (typeof fruits)[number]) {
   const sourceY = image.naturalHeight - fruit.rect.y - fruit.rect.height;
   const aspect = fruit.rect.width / fruit.rect.height;
-  const maxWorldSize = fruit.scale * 2 * FRUIT_VISUAL_DIAMETER_RATIO;
+  const maxWorldSize = fruitScale(fruit) * 2 * FRUIT_VISUAL_DIAMETER_RATIO;
   let width = maxWorldSize;
   let height = maxWorldSize;
   if (aspect > 1) height = width / aspect;
