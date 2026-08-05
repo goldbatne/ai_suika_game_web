@@ -218,9 +218,9 @@ button:active {
 .message {
   position: absolute;
   left: 50%;
-  top: 28%;
-  z-index: 6;
-  transform: translate(-50%, -50%);
+  top: 112px;
+  z-index: 9;
+  transform: translateX(-50%);
   min-width: 190px;
   border-radius: 8px;
   background: rgba(47, 38, 28, 0.9);
