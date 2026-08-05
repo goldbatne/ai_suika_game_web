@@ -341,7 +341,7 @@ button:active {
 @media (max-width: 860px) {
   .shell {
     grid-template-columns: minmax(300px, 540px);
-    align-content: center;
+    align-content: start;
     gap: 12px;
     padding: 10px;
   }
@@ -351,6 +351,28 @@ button:active {
   }
 
   .instructions {
-    display: none;
+    width: min(540px, 100%);
+    max-width: none;
+    padding: 14px 16px 18px;
+    border-radius: 8px;
+    background: rgba(12, 20, 32, 0.48);
+  }
+
+  .instructions h2 {
+    margin-bottom: 10px;
+    font-size: 24px;
+  }
+
+  .instructions table {
+    font-size: 13px;
+  }
+
+  .instructions th,
+  .instructions td {
+    padding: 8px 0;
+  }
+
+  .instructions th {
+    width: 66px;
   }
 }
