@@ -225,16 +225,16 @@ button:active {
   color: #ffd85a;
   padding: 0 12px;
   text-align: center;
-  font-size: clamp(28px, 6.8dvh, 52px);
+  font-size: clamp(10px, 2.3dvh, 17px);
   font-weight: 800;
   line-height: 1.08;
   pointer-events: none;
   text-shadow:
-    -2px -2px 0 #1e1710,
-    2px -2px 0 #1e1710,
-    -2px 2px 0 #1e1710,
-    2px 2px 0 #1e1710,
-    0 5px 10px rgba(0, 0, 0, 0.38);
+    -1px -1px 0 #1e1710,
+    1px -1px 0 #1e1710,
+    -1px 1px 0 #1e1710,
+    1px 1px 0 #1e1710,
+    0 3px 7px rgba(0, 0, 0, 0.38);
 }
 
 .countdown {
