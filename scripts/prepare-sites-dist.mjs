@@ -1,9 +1,31 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, readdir, stat, writeFile } from "node:fs/promises";
+import { join, relative, sep } from "node:path";
 
 const indexHtml = await readFile("dist/index.html", "utf8");
+const assetMap = {};
+
+async function collectAssets(directory) {
+  const entries = await readdir(directory);
+  for (const entry of entries) {
+    const fullPath = join(directory, entry);
+    const info = await stat(fullPath);
+    if (info.isDirectory()) {
+      if (entry !== "server" && entry !== ".openai") {
+        await collectAssets(fullPath);
+      }
+      continue;
+    }
+
+    const publicPath = `/${relative("dist", fullPath).split(sep).join("/")}`;
+    assetMap[publicPath] = (await readFile(fullPath)).toString("base64");
+  }
+}
+
+await collectAssets("dist");
 
 const workerSource = `
 const INDEX_HTML = ${JSON.stringify(indexHtml)};
+const ASSETS = ${JSON.stringify(assetMap)};
 
 const MIME_TYPES = {
   ".html": "text/html; charset=utf-8",
@@ -23,6 +45,14 @@ function contentType(pathname) {
 }
 
 async function fetchAsset(env, request, pathname) {
+  const embedded = ASSETS[pathname];
+  if (embedded) {
+    const binary = Uint8Array.from(atob(embedded), (char) => char.charCodeAt(0));
+    return new Response(binary, {
+      headers: { "content-type": contentType(pathname) },
+    });
+  }
+
   const assetUrl = new URL(request.url);
   assetUrl.pathname = pathname;
   return env.ASSETS.fetch(new Request(assetUrl.toString(), request));
