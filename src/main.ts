@@ -345,11 +345,11 @@ function useShake() {
     const worldX = screenToWorldX(body.position.x);
     const toCenterX = clamp(-worldX, -1, 1);
     const randomX = Math.random() * 0.5 - 0.25;
-    const dir = normalize(toCenterX + randomX, -1);
+    const horizontal = clamp(toCenterX + randomX, -1, 1);
     const forceScale = 0.0024 * body.mass;
     Body.applyForce(body, body.position, {
-      x: dir.x * 30 * forceScale,
-      y: -dir.y * 30 * forceScale,
+      x: horizontal * 30 * forceScale,
+      y: 0.35 * 30 * forceScale,
     });
     Body.setAngularVelocity(body, body.angularVelocity + (Math.random() * 2 - 1) * 0.5);
     Sleeping.set(body, false);
