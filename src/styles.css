@@ -79,7 +79,7 @@ button:active {
   padding: 54px 34px;
   background:
     linear-gradient(180deg, rgba(255, 234, 128, 0.42), rgba(0, 0, 0, 0) 34%),
-    url("/assets/ui/background.jpg") center / cover,
+    url("../assets/ui/background.jpg") center / cover,
     #f6a65f;
 }
 

@@ -50,18 +50,20 @@ const FRUIT_MATTER = {
   frictionAir: 0.002,
 };
 
+const assetPath = (path: string) => `${import.meta.env.BASE_URL}${path}`;
+
 const fruits = [
-  { name: "Fruit_01", level: 0, scale: 0.28, mass: 0.3, src: "/assets/fruits/fruit_01.png", rect: { x: 260, y: 46, width: 146, height: 308 } },
-  { name: "Fruit_02", level: 1, scale: 0.327, mass: 0.5, src: "/assets/fruits/fruit_02.png", rect: { x: 266, y: 72, width: 136, height: 238 } },
-  { name: "Fruit_03", level: 2, scale: 0.382, mass: 0.7, src: "/assets/fruits/fruit_03.png", rect: { x: 272, y: 90, width: 132, height: 208 } },
-  { name: "Fruit_04", level: 3, scale: 0.447, mass: 1, src: "/assets/fruits/fruit_04.png", rect: { x: 279, y: 76, width: 126, height: 225 } },
-  { name: "Fruit_05", level: 4, scale: 0.522, mass: 1.3, src: "/assets/fruits/fruit_05.png", rect: { x: 281, y: 84, width: 117, height: 226 } },
-  { name: "Fruit_06", level: 5, scale: 0.61, mass: 1.8, src: "/assets/fruits/fruit_06.png", rect: { x: 289, y: 92, width: 108, height: 188 } },
-  { name: "Fruit_07", level: 6, scale: 0.713, mass: 2.3, src: "/assets/fruits/fruit_07.png", rect: { x: 278, y: 78, width: 123, height: 203 } },
-  { name: "Fruit_08", level: 7, scale: 0.834, mass: 2.8, src: "/assets/fruits/fruit_08.png", rect: { x: 280, y: 78, width: 117, height: 204 } },
-  { name: "Fruit_09", level: 8, scale: 0.975, mass: 3.8, src: "/assets/fruits/fruit_09.png", rect: { x: 253, y: 75, width: 167, height: 208 } },
-  { name: "Fruit_10", level: 9, scale: 1.139, mass: 4.5, src: "/assets/fruits/fruit_10.png", rect: { x: 285, y: 75, width: 120, height: 203 } },
-  { name: "Fruit_11", level: 10, scale: 1.331, mass: 5.5, src: "/assets/fruits/fruit_11.png", rect: { x: 258, y: 74, width: 162, height: 205 } },
+  { name: "Fruit_01", level: 0, scale: 0.28, mass: 0.3, src: assetPath("assets/fruits/fruit_01.png"), rect: { x: 260, y: 46, width: 146, height: 308 } },
+  { name: "Fruit_02", level: 1, scale: 0.327, mass: 0.5, src: assetPath("assets/fruits/fruit_02.png"), rect: { x: 266, y: 72, width: 136, height: 238 } },
+  { name: "Fruit_03", level: 2, scale: 0.382, mass: 0.7, src: assetPath("assets/fruits/fruit_03.png"), rect: { x: 272, y: 90, width: 132, height: 208 } },
+  { name: "Fruit_04", level: 3, scale: 0.447, mass: 1, src: assetPath("assets/fruits/fruit_04.png"), rect: { x: 279, y: 76, width: 126, height: 225 } },
+  { name: "Fruit_05", level: 4, scale: 0.522, mass: 1.3, src: assetPath("assets/fruits/fruit_05.png"), rect: { x: 281, y: 84, width: 117, height: 226 } },
+  { name: "Fruit_06", level: 5, scale: 0.61, mass: 1.8, src: assetPath("assets/fruits/fruit_06.png"), rect: { x: 289, y: 92, width: 108, height: 188 } },
+  { name: "Fruit_07", level: 6, scale: 0.713, mass: 2.3, src: assetPath("assets/fruits/fruit_07.png"), rect: { x: 278, y: 78, width: 123, height: 203 } },
+  { name: "Fruit_08", level: 7, scale: 0.834, mass: 2.8, src: assetPath("assets/fruits/fruit_08.png"), rect: { x: 280, y: 78, width: 117, height: 204 } },
+  { name: "Fruit_09", level: 8, scale: 0.975, mass: 3.8, src: assetPath("assets/fruits/fruit_09.png"), rect: { x: 253, y: 75, width: 167, height: 208 } },
+  { name: "Fruit_10", level: 9, scale: 1.139, mass: 4.5, src: assetPath("assets/fruits/fruit_10.png"), rect: { x: 285, y: 75, width: 120, height: 203 } },
+  { name: "Fruit_11", level: 10, scale: 1.331, mass: 5.5, src: assetPath("assets/fruits/fruit_11.png"), rect: { x: 258, y: 74, width: 162, height: 205 } },
 ];
 
 type FruitBody = Matter.Body & {
@@ -77,12 +79,12 @@ type FruitBody = Matter.Body & {
 const images = new Map<string, HTMLImageElement>();
 const previews = new Map<string, string>();
 const background = new Image();
-background.src = "/assets/ui/background.jpg";
+background.src = assetPath("assets/ui/background.jpg");
 
 const sounds = {
-  bgm: new Audio("/assets/audio/bgm.mp3"),
-  drop: new Audio("/assets/audio/drop.mp3"),
-  merge: new Audio("/assets/audio/merge.mp3"),
+  bgm: new Audio(assetPath("assets/audio/bgm.mp3")),
+  drop: new Audio(assetPath("assets/audio/drop.mp3")),
+  merge: new Audio(assetPath("assets/audio/merge.mp3")),
 };
 sounds.bgm.loop = true;
 sounds.bgm.volume = 0.45;
