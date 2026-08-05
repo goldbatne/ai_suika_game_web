@@ -336,7 +336,7 @@ function useShake() {
   }
   shakeCount -= 1;
   updateHud();
-  startShake(0.55, 90);
+  startShake(0.65, 120);
 
   for (const body of Composite.allBodies(engine.world) as FruitBody[]) {
     if (body.isStatic || body.fruitLevel == null) continue;
@@ -344,14 +344,20 @@ function useShake() {
     if (worldY >= DEAD_ZONE_Y) continue;
     const worldX = screenToWorldX(body.position.x);
     const toCenterX = clamp(-worldX, -1, 1);
-    const randomX = Math.random() * 0.5 - 0.25;
-    const horizontal = clamp(toCenterX + randomX, -1, 1);
-    const forceScale = 0.0024 * body.mass;
+    const randomX = Math.random() * 1.4 - 0.7;
+    const horizontal = clamp(toCenterX + randomX, -1.25, 1.25);
+    const upward = 4.2 + Math.random() * 1.8;
+    const sideKick = horizontal * (5.2 + Math.random() * 2.8);
+    const forceScale = 0.0012 * body.mass;
     Body.applyForce(body, body.position, {
-      x: horizontal * 30 * forceScale,
-      y: 0.35 * 30 * forceScale,
+      x: horizontal * 18 * forceScale,
+      y: -0.55 * 18 * forceScale,
     });
-    Body.setAngularVelocity(body, body.angularVelocity + (Math.random() * 2 - 1) * 0.5);
+    Body.setVelocity(body, {
+      x: clamp(body.velocity.x + sideKick, -9, 9),
+      y: clamp(body.velocity.y - upward, -8, 4),
+    });
+    Body.setAngularVelocity(body, body.angularVelocity + (Math.random() * 2 - 1) * 1.15);
     Sleeping.set(body, false);
   }
 }
