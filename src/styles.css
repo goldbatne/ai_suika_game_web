@@ -218,16 +218,23 @@ button:active {
 .message {
   position: absolute;
   left: 50%;
-  top: 112px;
-  z-index: 9;
+  top: 32%;
+  z-index: 20;
   transform: translateX(-50%);
-  min-width: 190px;
-  border-radius: 8px;
-  background: rgba(47, 38, 28, 0.9);
-  color: #fff6d6;
-  padding: 12px 16px;
+  width: min(92%, 460px);
+  color: #ffd85a;
+  padding: 0 12px;
   text-align: center;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+  font-size: clamp(28px, 6.8dvh, 52px);
+  font-weight: 800;
+  line-height: 1.08;
+  pointer-events: none;
+  text-shadow:
+    -2px -2px 0 #1e1710,
+    2px -2px 0 #1e1710,
+    -2px 2px 0 #1e1710,
+    2px 2px 0 #1e1710,
+    0 5px 10px rgba(0, 0, 0, 0.38);
 }
 
 .countdown {
